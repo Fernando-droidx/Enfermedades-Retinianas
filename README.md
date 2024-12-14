@@ -37,25 +37,19 @@ Esta aplicación permite cargar imágenes de retina para su análisis y diagnós
    cd diagnostico-retiniano
 2. **Crea y activa un entorno virtual**:
 
-    ```bash
-    Copiar código
+    ```
     python -m venv venv
     source venv/bin/activate  # En Windows: venv\Scripts\activate
    Instala las dependencias:
 3. **Instala las dependencias**:
 
-   ```bash
-   Copiar código
-   
-   bash
-   Copiar código
+   ```
    pip install -r requirements.txt
 4. **Descarga el Dataset Retinal Octo que se menciona arriba**
 
 5. **Ejecuta la aplicación**:
 
-   ```bash
-   Copiar código
+   ```
    python app.py
 6. **Accede a la aplicación en tu navegador en http://127.0.0.1:5000**
 
