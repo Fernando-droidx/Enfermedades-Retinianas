@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de Enfermedades Retinianas</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Diagnóstico de Enfermedades Retinianas</h1>
+        <p>Cargue una imagen del ojo para recibir un diagnóstico.</p>
+    </header>
+    <main>
+        <section class="upload-section">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <label for="file-upload" class="custom-file-upload">
+                    Subir una foto
+                </label>
+                <input type="file" id="file-upload" name="file" accept="image/*" required>
+                <button type="submit">Diagnosticar</button>
+            </form>
+            <div id="result"></div>
+        </section>
+        <section class="info-section">
+            <h2>¿Cómo funciona?</h2>
+            <p class="disclaimer">
+                Nuestro modelo de IA analiza imágenes de retina para identificar enfermedades comunes como hinchazón retinal, crecimiento anormal de vasos sanguíneos y depósitos relacionados con degeneración macular.
+            </p>
+            <h2>Disclaimer</h2>
+            <p class="disclaimer">
+                <b>El modelo no reemplaza una evaluación médica profesional.</b> Los resultados deben ser confirmados por un oftalmólogo. Este modelo es únicamente para fines educativos.
+            </p>
+        </section>
+    </main>
+    <div id="footer">
+        <p>© 2024 Medical AI Community. All rights reserved.</p>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<p>Diagnóstico: <strong>${data.prediction}</strong></p>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<p>Error al procesar la imagen: ${error.message}</p>`;
+            });
+        });
+    </script>
+</body>
+</html>
